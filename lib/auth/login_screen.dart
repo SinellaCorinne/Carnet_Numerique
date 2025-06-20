@@ -1,4 +1,5 @@
-// connexion_page.dart
+import 'package:e_carnet/auth/profil_user.dart';
+import 'package:e_carnet/auth/register.dart';
 import 'package:e_carnet/main.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -7,8 +8,12 @@ import 'package:iconsax/iconsax.dart';
 import '../composants/Boutton.dart';
 import '../composants/text_field.dart';
 import '../pages/agentScreen1.dart';
+// Import de la page d'inscription
 import '../theme/style.dart';
 import 'package:e_carnet/carnet.dart';
+
+import 'forget_password.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
 
@@ -34,9 +39,9 @@ class _LoginScreenState extends State<LoginScreen> {
       body: Stack(
         children: [
           Container(
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               gradient: LinearGradient(
-                colors: [Colors.white, Colors.white],
+                colors: [Color(0xFFfdfbfb), Color(0xFFebedee)],
                 begin: Alignment.topCenter,
                 end: Alignment.bottomCenter,
               ),
@@ -44,83 +49,151 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
           Center(
             child: SingleChildScrollView(
-              child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: Form(
-                  key: _formKey,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Image.asset(
-                        "assets/images/Medical prescription-bro.png",
-                        width: 100,
-                        height: 100,
-                        fit: BoxFit.contain,
-                      ),
-                      SizedBox(height: 40),
-                      Text("Connexion!",
-                          style: KTypography.h3(context, color: KColors.secondary),
-                          textAlign: TextAlign.center),
-                      SizedBox(height: 20),
-                      Textfield(
-                        controller: emailController,
-                        name: "Email",
-                        keyboardType: TextInputType.emailAddress,
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Veuillez entrer un email';
-                          } else if (!isValidEmail(value)) {
-                            return 'Format d\'email invalide';
-                          }
-                          return null; // Pas d'erreur
-                        },
-                      ),
-                      SizedBox(height: 15),
-                      Textfield(
-                        controller: passwordController,
-                        name: "Password",
-                        suffixIcon: Icon(Iconsax.password_check,
-                            color: KColors.secondary),
-                        validator: (value) {
-                          if (value == null || value.isEmpty) {
-                            return 'Veuillez entrer un mot de passe';
-                          } else if (!isValidPassword(value)) {
-                            return 'Le mot de passe doit contenir au moins 8 caractères, une lettre majuscule et un chiffre';
-                          }
-                          return null; // Pas d'erreur
-                        },
-                      ),
-                      SizedBox(height: 10),
-                      TextButton(
-                        child: Text("Mot de passe oublié?",
-                            style: KTypography.h6(context,
-                                color: KColors.primary)),
-                        onPressed: () => Get.to(LoginScreen()),
-                      ),
-                      SizedBox(height: 20),
-                      isLoading
-                          ? CircularProgressIndicator(color: KColors.primary)
-                          : Boutton(
-                          child: Text("Se connecter"),
-                          onPressed: () => Get.to(Carnet()),
+              padding: const EdgeInsets.all(24),
+              child: Form(
+                key: _formKey,
+                child: Card(
+                  elevation: 10,
+                  shadowColor: KColors.secondary.withOpacity(0.2),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 24.0, vertical: 36),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Image.asset(
+                          "assets/images/Medical prescription-bro.png",
+                          width: 120,
+                          height: 120,
+                          fit: BoxFit.contain,
+                        ),
+                        const SizedBox(height: 30),
+                        Text(
+                          "Connexion",
+                          style: KTypography.h2(context,
+                              color: KColors.secondary),
+                          textAlign: TextAlign.center,
+                        ),
+                        const SizedBox(height: 24),
+                        Textfield(
+                          obscureText: false,
+                          controller: emailController,
+                          name: "Email",
+                          prefixIcon:
+                          Icon(Icons.email_outlined, color: KColors.primary),
+                          keyboardType: TextInputType.emailAddress,
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Veuillez entrer un email';
+                            } else if (!isValidEmail(value)) {
+                              return 'Format d\'email invalide';
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 16),
+                        Textfield(
+                          controller: passwordController,
+                          name: "Mot de passe",
+                          obscureText: true,
+                          prefixIcon:
+                          Icon(Icons.lock_outline, color: KColors.primary),
+                          suffixIcon: Icon(Iconsax.password_check,
+                              color: KColors.secondary),
+                          validator: (value) {
+                            if (value == null || value.isEmpty) {
+                              return 'Veuillez entrer un mot de passe';
+                            } else if (!isValidPassword(value)) {
+                              return 'Le mot de passe doit contenir au moins 8 caractères, une majuscule et un chiffre';
+                            }
+                            return null;
+                          },
+                        ),
+                        const SizedBox(height: 12),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: TextButton(
+                            onPressed: () {
+                              Get.to(() =>  ForgetPassword());
+                            },
+                            child: Text("Mot de passe oublié ?",
+                                style: KTypography.h6(context,
+                                    color: KColors.primary)),
+                          ),
+                        ),
+                        const SizedBox(height: 12),
+                        isLoading
+                            ? CircularProgressIndicator(color: KColors.primary)
+                            : Boutton(
+                          child: Text("Se connecter",
+                              style: TextStyle(fontSize: 16)),
+                          onPressed: () {
+                            if (_formKey.currentState!.validate()) {
+                              setState(() {
+                                isLoading = true;
+                              });
+
+                              // Simuler une connexion
+                              Future.delayed(Duration(seconds: 2), () {
+                                setState(() {
+                                  isLoading = false;
+                                });
+                                Get.to(Carnet());
+                              });
+                            }
+                          },
                           backgroundColor: KColors.tertiary,
                           borderColor: KColors.tertiary,
-                          foregroundColor: Colors.white),
-                      SizedBox(height: 10),
-                      const Text('Ou'),
-                      const SizedBox(height: 8),
-                      GestureDetector(
-                        onTap: () {},
-                        child: const Row(
+                          foregroundColor: Colors.white,
+                        ),
+                        const SizedBox(height: 16),
+                        const Text('Ou'),
+                        const SizedBox(height: 10),
+                        GestureDetector(
+                          onTap: () {
+                            // TODO: Implémenter l'accès QR Code
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.qr_code, color: KColors.secondary),
+                              const SizedBox(width: 8),
+                              Text(
+                                'Accès parent via QR Code',
+                                style: KTypography.h6(context,
+                                    color: KColors.secondary),
+                              ),
+                            ],
+                          ),
+                        ),
+                        const SizedBox(height: 20),
+
+                        // Lien vers la page d'inscription
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Icon(Icons.qr_code),
-                            SizedBox(width: 8),
-                            Text('Accès parent via QR Code'),
+                            Text(
+                              'Pas encore de compte ? ',
+                              style: KTypography.h6(context),
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                Get.to(() => ProfilUser());
+                              },
+                              child: Text(
+                                'S\'inscrire',
+                                style: KTypography.h6(context,
+                                    color: KColors.primary,
+                                   ),
+                              ),
+                            ),
                           ],
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -131,14 +204,19 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
-  // Validation de l'email correspondant au format exemple@gmail.com
   bool isValidEmail(String email) {
     String emailPattern = r'^[^@]+@[^@]+\.[^@]+$';
     return RegExp(emailPattern).hasMatch(email);
   }
 
-  // Validation du mot de passe qui doit avoir minimum 8 caractères, une lettre majuscule et un chiffre
   bool isValidPassword(String password) {
     return RegExp(r'^(?=.*[A-Z])(?=.*\d).{8,}$').hasMatch(password);
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
   }
 }

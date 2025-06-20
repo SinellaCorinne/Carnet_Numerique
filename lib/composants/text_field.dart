@@ -11,10 +11,12 @@ class Textfield extends StatelessWidget {
   final dynamic initialValue;
   final TextEditingController? controller;
   final String? Function(String?)? validator;
+  final bool obscureText;
 
   const Textfield({
     super.key,
     required this.name,
+    required this.obscureText,
     this.keyboardType,
     this.prefixIcon,
     this.suffixIcon,

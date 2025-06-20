@@ -1,4 +1,4 @@
-import 'package:e_carnet/composants/Boutton.dart'; // Assure-toi que ce fichier contient bien un widget custom appelé Boutton
+import 'package:e_carnet/composants/Boutton.dart';
 import 'package:e_carnet/theme/style.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -11,43 +11,70 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Stack(
-        children: [
-          // Dégradé d'arrière-plan
-          Container(
-            decoration: BoxDecoration(
-              gradient: LinearGradient(
-                colors: [KColors.secondary, KColors.secondary], // Exemple avec 2 couleurs différentes
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-              ),
-            ),
+      body: Container(
+        decoration: BoxDecoration(
+          gradient: LinearGradient(
+            colors: [KColors.secondary, KColors.primary],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
           ),
-          // Contenu
-          Padding(
-            padding: const EdgeInsets.all(16.0),
+        ),
+        child: Center(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.symmetric(horizontal: 24),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text(
-                  "Bienvenue dans votre carnet numérique !",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
-                  ),
-                  textAlign: TextAlign.center,
+                // Illustration
+                Image.asset(
+                  "assets/images/Medical prescription-bro.png",
+                  width: 220,
+                  height: 220,
+                  fit: BoxFit.contain,
                 ),
+                const SizedBox(height: 40),
+
+                // Titre
+                Text(
+                  "Bienvenue\n dans votre carnet numérique !",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    fontSize: 24,
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold,
+                    height: 1.4,
+                  ),
+                ),
+
                 const SizedBox(height: 30),
+
+                // Bouton Commencer
                 Boutton(
-                  child: Text("Commencer"),
-                  onPressed: () => Get.to(LoginScreen()),
+                  child: const Text(
+                    "Commencer",
+                    style: TextStyle(fontSize: 16),
+                  ),
+                  backgroundColor: Colors.white,
+                  foregroundColor: KColors.secondary,
+                  borderColor: Colors.white,
+                  onPressed: () => Get.to(() => const LoginScreen()),
+                ),
+
+                const SizedBox(height: 16),
+
+                // Optionnel : petite description
+                Text(
+                  "Accédez facilement à vos informations de santé.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.white70,
+                    fontSize: 14,
+                  ),
                 ),
               ],
             ),
           ),
-        ],
+        ),
       ),
     );
   }
