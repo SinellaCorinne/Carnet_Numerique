@@ -2,15 +2,8 @@ import 'package:e_carnet/composants/text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-
 import '../composants/Boutton.dart';
 import '../composants/vaccin_controller.dart';
-import '../theme/style.dart';
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
-
-import '../composants/Boutton.dart';
 import '../theme/style.dart';
 
 class FichePatientScreen extends StatelessWidget {

@@ -1,6 +1,5 @@
 import 'package:e_carnet/pages/agentScreen1.dart';
 import 'package:e_carnet/pages/nouveau_carnet.dart';
-import 'package:e_carnet/pages/parentScreen.dart';
 import 'package:e_carnet/pages/statis_screen.dart';
 import 'package:e_carnet/theme/style.dart';
 import 'package:flutter/material.dart';

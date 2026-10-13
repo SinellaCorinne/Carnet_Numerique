@@ -1,7 +1,5 @@
-import 'package:e_carnet/main.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:iconsax/iconsax.dart';
 import '../composants/Boutton.dart';
 import '../composants/text_field.dart';
 import '../theme/style.dart';

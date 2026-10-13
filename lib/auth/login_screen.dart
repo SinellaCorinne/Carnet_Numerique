@@ -1,17 +1,11 @@
 import 'package:e_carnet/auth/profil_user.dart';
-import 'package:e_carnet/auth/register.dart';
-import 'package:e_carnet/main.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:iconsax/iconsax.dart';
-
 import '../composants/Boutton.dart';
 import '../composants/text_field.dart';
-import '../pages/agentScreen1.dart';
-// Import de la page d'inscription
 import '../theme/style.dart';
 import 'package:e_carnet/carnet.dart';
-
 import 'forget_password.dart';
 
 class LoginScreen extends StatefulWidget {
